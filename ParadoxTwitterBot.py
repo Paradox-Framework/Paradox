@@ -2,7 +2,6 @@ import os
 import tweepy
 from dotenv import load_dotenv
 
-# Load API keys
 load_dotenv()
 TWITTER_API_KEY = os.getenv("TWITTER_API_KEY")
 TWITTER_API_SECRET = os.getenv("TWITTER_API_SECRET")
