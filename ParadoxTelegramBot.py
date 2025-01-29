@@ -1,11 +1,17 @@
+import os
+from dotenv import load_dotenv
 from telegram import Update
 from telegram.ext import Updater, CommandHandler, CallbackContext
 
+# Load API keys
+load_dotenv()
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+TELEGRAM_ADMIN_CHAT_ID = int(os.getenv("TELEGRAM_ADMIN_CHAT_ID"))
+
 class ParadoxTelegramBot:
-    def __init__(self, bot_token, agent, admin_chat_id):
+    def __init__(self, agent):
         self.agent = agent
-        self.admin_chat_id = admin_chat_id
-        self.updater = Updater(bot_token, use_context=True)
+        self.updater = Updater(TELEGRAM_BOT_TOKEN, use_context=True)
         dp = self.updater.dispatcher
 
         dp.add_handler(CommandHandler("trade", self.execute_trade))
@@ -31,16 +37,16 @@ class ParadoxTelegramBot:
 
     def post_message(self, update: Update, context: CallbackContext):
         """Manually sends a message from the bot (Admin Only)."""
-        if update.message.chat_id != self.admin_chat_id:
+        if update.message.chat_id != TELEGRAM_ADMIN_CHAT_ID:
             update.message.reply_text("This command can only be used in the admin group.")
             return
         message = " ".join(context.args)
-        self.agent.send_post(self.admin_chat_id, message)
+        self.agent.send_post(TELEGRAM_ADMIN_CHAT_ID, message)
         update.message.reply_text("Message posted.")
 
     def post_report(self, update: Update, context: CallbackContext):
         """Posts a summary of recent market/trading activity (Admin Only)."""
-        if update.message.chat_id != self.admin_chat_id:
+        if update.message.chat_id != TELEGRAM_ADMIN_CHAT_ID:
             update.message.reply_text("This command can only be used in the admin group.")
             return
         report = self.agent.generate_report()
