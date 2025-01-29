@@ -144,5 +144,3 @@ For support and discussions, connect with us on:
 
 ---
 ```
-
-This **README.md** file is structured for clarity, making it easy for users to **install, configure, deploy, and manage** their Paradox AI Agent. Let me know if you'd like any refinements! 🚀
