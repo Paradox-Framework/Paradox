@@ -1,19 +1,28 @@
+import os
 import tweepy
+from dotenv import load_dotenv
+
+# Load API keys
+load_dotenv()
+TWITTER_API_KEY = os.getenv("TWITTER_API_KEY")
+TWITTER_API_SECRET = os.getenv("TWITTER_API_SECRET")
+TWITTER_ACCESS_TOKEN = os.getenv("TWITTER_ACCESS_TOKEN")
+TWITTER_ACCESS_SECRET = os.getenv("TWITTER_ACCESS_SECRET")
+TWITTER_ADMIN_HANDLE = os.getenv("TWITTER_ADMIN_HANDLE")
 
 class ParadoxTwitterBot:
-    def __init__(self, api_key, api_secret, access_token, access_secret, agent, admin_user):
+    def __init__(self, agent):
         self.agent = agent
-        self.admin_user = admin_user  # Twitter handle of the admin user
 
-        auth = tweepy.OAuthHandler(api_key, api_secret)
-        auth.set_access_token(access_token, access_secret)
+        auth = tweepy.OAuthHandler(TWITTER_API_KEY, TWITTER_API_SECRET)
+        auth.set_access_token(TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_SECRET)
         self.api = tweepy.API(auth)
         self.stream_listener = TwitterStreamListener(self)
         self.stream = tweepy.Stream(auth=self.api.auth, listener=self.stream_listener)
 
     def process_command(self, sender, message):
         """Processes commands sent via Twitter DM from the admin."""
-        if sender != self.admin_user:
+        if sender != TWITTER_ADMIN_HANDLE:
             return "Unauthorized: You are not the designated admin."
 
         command_parts = message.split()
@@ -40,7 +49,7 @@ class ParadoxTwitterBot:
 
     def run(self):
         """Starts listening for direct messages from the admin."""
-        self.stream.filter(track=[f"@{self.admin_user}"], is_async=True)
+        self.stream.filter(track=[f"@{TWITTER_ADMIN_HANDLE}"], is_async=True)
 
 class TwitterStreamListener(tweepy.StreamListener):
     def __init__(self, bot):
