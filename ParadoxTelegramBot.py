@@ -3,7 +3,6 @@ from dotenv import load_dotenv
 from telegram import Update
 from telegram.ext import Updater, CommandHandler, CallbackContext
 
-# Load API keys
 load_dotenv()
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 TELEGRAM_ADMIN_CHAT_ID = int(os.getenv("TELEGRAM_ADMIN_CHAT_ID"))
