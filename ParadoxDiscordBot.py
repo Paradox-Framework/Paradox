@@ -1,16 +1,22 @@
+import os
 import discord
 from discord.ext import commands
+from dotenv import load_dotenv
+
+# Load API keys
+load_dotenv()
+DISCORD_BOT_TOKEN = os.getenv("DISCORD_BOT_TOKEN")
+DISCORD_ADMIN_CHANNEL_ID = int(os.getenv("DISCORD_ADMIN_CHANNEL_ID"))
 
 class ParadoxDiscordBot(commands.Cog):
-    def __init__(self, bot, agent, admin_channel_id):
+    def __init__(self, bot, agent):
         self.bot = bot
         self.agent = agent
-        self.admin_channel_id = admin_channel_id  # Admin-only command channel
 
     @commands.command(name="set_admin")
     async def set_admin(self, ctx, new_admin: discord.Member):
         """Assigns a new admin to manage the agent (Admin Only)."""
-        if ctx.channel.id != self.admin_channel_id:
+        if ctx.channel.id != DISCORD_ADMIN_CHANNEL_ID:
             return await ctx.send("This command can only be used in the admin channel.")
         self.agent.set_admin(new_admin.id)
         await ctx.send(f"New admin set: {new_admin.mention}")
@@ -30,7 +36,7 @@ class ParadoxDiscordBot(commands.Cog):
     @commands.command(name="post")
     async def post_message(self, ctx, *, message):
         """Manually sends a message from the bot (Admin Only)."""
-        if ctx.channel.id != self.admin_channel_id:
+        if ctx.channel.id != DISCORD_ADMIN_CHANNEL_ID:
             return await ctx.send("This command can only be used in the admin channel.")
         self.agent.send_post(ctx.channel.id, message)
         await ctx.send("Message posted.")
@@ -38,10 +44,12 @@ class ParadoxDiscordBot(commands.Cog):
     @commands.command(name="report")
     async def post_report(self, ctx):
         """Posts a summary of recent market/trading activity."""
-        if ctx.channel.id != self.admin_channel_id:
+        if ctx.channel.id != DISCORD_ADMIN_CHANNEL_ID:
             return await ctx.send("This command can only be used in the admin channel.")
         report = self.agent.generate_report()
         await ctx.send(report)
 
-def setup(bot, agent, admin_channel_id):
-    bot.add_cog(ParadoxDiscordBot(bot, agent, admin_channel_id))
+def start_discord_bot(agent):
+    bot = commands.Bot(command_prefix="$", intents=discord.Intents.all())
+    bot.add_cog(ParadoxDiscordBot(bot, agent))
+    bot.run(DISCORD_BOT_TOKEN)
