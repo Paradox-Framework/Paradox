@@ -1,3 +1,4 @@
+from paradox.agent import ParadoxAgent
 class ParadoxAgent:
     def __init__(self):
         self.admin_id = None
@@ -118,8 +119,6 @@ def deploy_paradox_agent():
     trading_engine = initialize_trading(defi_api)
     posting_system = initialize_posting(platform_api)
 
-    agent.set_admin("YOUR_ADMIN_ID")
-    agent.set_personality("conservative")
     agent.deploy()
 
     return {
@@ -129,6 +128,3 @@ def deploy_paradox_agent():
         "trading_status": "Ready",
         "posting_status": "Configured"
     }
-
-
-deploy_paradox_agent()
