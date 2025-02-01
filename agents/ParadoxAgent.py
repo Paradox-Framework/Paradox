@@ -1,4 +1,5 @@
 from paradox.agent import ParadoxAgent
+import requests
 class ParadoxAgent:
     def __init__(self):
         self.admin_id = None
@@ -26,32 +27,57 @@ class ParadoxAgent:
 
 
 class ParadoxAnalysis:
-    def __init__(self, solscan_api):
-        self.solscan_api = solscan_api
+    def __init__(self, solscan_api_key):
+        self.base_url = "https://pro-api.solscan.io/v2.0"
+        self.headers = {"token": solscan_api_key}
 
     def get_tokenomics(self, token_address):
-        token_data = self.solscan_api.get_token_details(token_address)
+        url = f"{self.base_url}/account/detail"
+        params = {"address": token_address}
+        response = requests.get(url, headers=self.headers, params=params)
+        data = response.json()
         return {
-            "volume": token_data.get("volume"),
-            "market_cap": token_data.get("market_cap"),
-            "top_holders": token_data.get("holders"),
-            "recent_trends": token_data.get("trends"),
+            "volume": data.get("volume"),
+            "market_cap": data.get("market_cap"),
+            "top_holders": data.get("holders"),
+            "recent_trends": data.get("trends"),
         }
 
-    def get_top_coins(self, time_range="7d"):
-        return self.solscan_api.get_top_coins(time_range)
+    def get_top_coins(self):
+        url = f"{self.base_url}/account/token-accounts"
+        params = {"type": "token", "page": 1, "page_size": 10}
+        response = requests.get(url, headers=self.headers, params=params)
+        return response.json()
 
 
 class ParadoxWalletTracking:
-    def __init__(self, solscan_api):
-        self.solscan_api = solscan_api
+    def __init__(self, solscan_api_key):
+        self.base_url = "https://pro-api.solscan.io/v2.0"
+        self.headers = {"token": solscan_api_key}
 
     def track_wallet(self, wallet_address):
-        return self.solscan_api.get_wallet_transactions(wallet_address)
+        url = f"{self.base_url}/account/transfer"
+        params = {
+            "address": wallet_address,
+            "page": 1,
+            "page_size": 10,
+            "sort_by": "block_time",
+            "sort_order": "desc"
+        }
+        response = requests.get(url, headers=self.headers, params=params)
+        return response.json()
 
     def get_wallet_activity(self, wallet_address):
-        return self.solscan_api.get_wallet_activity(wallet_address)
-
+        url = f"{self.base_url}/account/defi/activities"
+        params = {
+            "address": wallet_address,
+            "page": 1,
+            "page_size": 10,
+            "sort_by": "block_time",
+            "sort_order": "desc"
+        }
+        response = requests.get(url, headers=self.headers, params=params)
+        return response.json()
 
 class ParadoxTrading:
     def __init__(self, defi_api, personality="conservative"):
