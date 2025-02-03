@@ -109,26 +109,6 @@ class ParadoxWalletTracking:
         response = requests.get(url, headers=self.headers, params=params)
         return response.json()
 
-class ParadoxWalletTracking:
-    def init(self):
-    self.base_url = "https://pro-api.solscan.io/v2.0"
-    self.api_key = os.getenv("SOLSCAN_API_KEY")
-    self.headers = {"token": self.api_key}
-
-    def track_wallet(self, wallet_address):
-        url = f"{self.base_url}/account/transfer"
-        params = {"address": wallet_address, "page": 1, "page_size": 10, "sort_by": "block_time", "sort_order": "desc"}
-        response = requests.get(url, headers=self.headers, params=params)
-        data = response.json()
-    return data.get("data", [])
-
-    def get_wallet_activity(self, wallet_address):
-        url = f"{self.base_url}/account/defi/activities"
-        params = {"address": wallet_address, "page": 1, "page_size": 10, "sort_by": "block_time", "sort_order": "desc"}
-        response = requests.get(url, headers=self.headers, params=params)
-        data = response.json()
-        return data.get("activities", [])
-
 class ParadoxTransactions:
     def init(self):
         self.base_url = "https://pro-api.solscan.io/v2.0"
