@@ -6,6 +6,12 @@ class ParadoxAgent:
         self.trading_personality = "conservative"
         self.auto_post_enabled = False
 
+ def load_llama2_model(self):
+        model_name = "meta-llama/Llama-2-7b-chat-hf"
+        tokenizer = AutoTokenizer.from_pretrained(model_name)
+        model = AutoModelForCausalLM.from_pretrained(model_name)
+        return model, tokenizer
+
     def set_admin(self, admin_id):
         self.admin_id = admin_id
         return f"Admin set to {admin_id}"
@@ -45,6 +51,15 @@ class ParadoxAnalysis:
         "price": data.get("price"),
         "holders": data.get("holders"),
     }
+
+    async def analyze_defi_trends(self, prompt_text):
+    agent_builder = ParadoxAgentBuilder(self.llama_model, self.llama_tokenizer) \
+        .preamble("You are a blockchain analysis agent designed to monitor DeFi activities, execute trades, and post real-time updates.") \
+        .build()
+
+    response = await agent_builder.prompt(prompt_text)
+    return response
+
 
 def get_token_transfers(self, token_address):
     url = f"{self.base_url}/token/transfer"
