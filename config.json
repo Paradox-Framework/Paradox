@@ -1,0 +1,15 @@
+{
+    "SECRET_KEY": "",
+    "PRIVATE_RPC_ENDPOINT": "https://api.mainnet-beta.solana.com",
+    "ASSOCIATED_TOKEN_CA": "",
+    "TELEGRAM_TOKEN": "",
+    "CHAT_ID": "",
+    "DISCORD_TOKEN": "",
+    "SERVER_ID": "",
+    "TWITTER_API_KEY": "",
+    "TWITTER_API_SECRET": "",
+    "TWITTER_BEARER_TOKEN": "",
+    "ACCESS_TOKEN": "",
+    "ACCESS_TOKEN_SECRET": "",
+    "SOLSCAN_API_KEY": ""
+}
