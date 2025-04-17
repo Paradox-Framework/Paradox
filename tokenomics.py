@@ -15,7 +15,7 @@ def getTokenPrice(ca, solscanAPIKEY):
             price = data['data'][0]['price']
             return price
         else:
-            return f'Exit code {data['errors']['code']}: {data['errors']['message']}'
+            return -1
 
     except:
         return 'Exit code -1: Make sure CA and Solscan API Key are correct.'
@@ -47,7 +47,7 @@ def getTokenMarketCap(ca, solscanAPIKEY):
         if data['success'] == True:
             return data['data']['market_cap']
         else:
-            return f'Exit code {data['errors']['code']}: {data['errors']['message']}'
+            return -1
 
     except:
         return 'Exit code -1: Make sure CA and Solscan API Key are correct.'
@@ -73,7 +73,7 @@ def getTokenSupply(ca, solscanAPIKEY):
         if data['success'] == True:
             return data['data']['supply']
         else:
-            return f'Exit code {data['errors']['code']}: {data['errors']['message']}'
+            return -1
 
     except:
         return 'Exit code -1: Make sure CA and Solscan API Key are correct.'
@@ -92,7 +92,7 @@ def getTokenName(ca, solscanAPIKEY):
         if data['success'] == True:
             return data['data']['name']
         else:
-            return f'Exit code {data['errors']['code']}: {data['errors']['message']}'
+            return -1
 
     except:
         return 'Exit code -1: Make sure CA and Solscan API Key are correct.'
@@ -111,7 +111,7 @@ def getTokenSymbol(ca, solscanAPIKEY):
         if data['success'] == True:
             return data['data']['symbol']
         else:
-            return f'Exit code {data['errors']['code']}: {data['errors']['message']}'
+            return -1
 
     except:
         return 'Exit code -1: Make sure CA and Solscan API Key are correct.'
@@ -135,7 +135,7 @@ def getTokenTwitter(ca, solscanAPIKEY):
                 return f'Exit code -1: Could not access Token Twitter'
 
         else:
-            return f'Exit code {data['errors']['code']}: {data['errors']['message']}'
+            return -1
 
     except:
         return 'Exit code -1: Make sure CA and Solscan API Key are correct.'
@@ -154,8 +154,7 @@ def getTokenHolderCount(ca, solscanAPIKEY):
         if data['success'] == True:
             return data['data']['total']
         else:
-            return f'Exit code {data['errors']['code']}: {data['errors']['message']}'
-
+            return -1
     except:
         return 'Exit code -1: Make sure CA and Solscan API Key are correct.'
 
@@ -173,7 +172,7 @@ def getTokenCreator(ca, solscanAPIKEY):
         if data['success'] == True:
             return data['data']['creator']
         else:
-            return f'Exit code {data['errors']['code']}: {data['errors']['message']}'
+            return -1
 
     except:
         return 'Exit code -1: Make sure CA and Solscan API Key are correct.'
