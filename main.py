@@ -286,12 +286,12 @@ async def buy(interaction: discord.Interaction, ca: str, amount: float, moredeta
     if moredetails:
         message = (f'Purchased: {symbol}: {name}\n'
                    f'Amount: {amount} SOL\n'
-                   f'Account Used: {keypair.pubkey()}\n'
+                   #f'Account Used: {keypair.pubkey()}\n'
                    f'Transaction Details: {details}')
     else:
         message = (f'Purchased: {symbol}: {name}\n'
-                   f'Amount: {amount} SOL\n'
-                   f'Account Used: {keypair.pubkey()}')
+                   f'Amount: {amount} SOL\n')
+                   #f'Account Used: {keypair.pubkey()}')
 
     try:
         if platform == 'telegram':
@@ -342,12 +342,12 @@ async def sell(interaction: discord.Interaction, ca: str, amount: float, moredet
     if moredetails:
         message = (f'Sold: {symbol}: {name}\n'
                    f'Amount: {amount} SOL\n'
-                   f'Account Used: {keypair.pubkey()}\n'
+                   #f'Account Used: {keypair.pubkey()}\n'
                    f'Transaction Details: {details}')
     else:
         message = (f'Sold: {symbol}: {name}\n'
-                   f'Amount: {amount} SOL\n'
-                   f'Account Used: {keypair.pubkey()}')
+                   f'Amount: {amount} SOL\n')
+                   #f'Account Used: {keypair.pubkey()}')
 
     try:
         if platform == 'telegram':
