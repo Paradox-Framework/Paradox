@@ -124,8 +124,9 @@ class Client(commands.Bot):
         load_admins()
         print(f'Loaded {len(admins)} admins from storage.')
 
+        guild = discord.Object(id=SERVER_ID)
+
         try:
-            guild = discord.Object(id=SERVER_ID)
             synced = await self.tree.sync(guild=guild)
             print(f'Synced {len(synced)} commands to server {guild.id}')
         except Exception as e:
