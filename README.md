@@ -1,6 +1,6 @@
  **Paradox Framework V1.1.1**  
 
-The **Paradox Framework** integrates **Hugging Face transformers** with **blockchain analytics and DeFi trading**, enabling AI-driven agents to automate **token deployment, trading execution, wallet tracking, and tokenomics analysis** on the **Solana blockchain**.  
+The **Paradox Framework** integrates **blockchain analytics** and **DeFi trading**, enabling AI-driven agents to automate **token deployment, trading execution, wallet tracking, and tokenomics analysis** on the **Solana blockchain**.  
 
 ## **Features**  
 ✅ **AI-Powered Trading** – Execute AI-driven trades using Hugging Face models.  
