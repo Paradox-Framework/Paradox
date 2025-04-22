@@ -57,7 +57,6 @@ Advanced	Fully customizable with AI and trading hooks
 1. Clone the Framework
 git clone https://github.com/Paradox-Framework/Paradox.git
 cd Paradox
-pip install -r requirements.txt
 
 2. Set Up Configuration
 
